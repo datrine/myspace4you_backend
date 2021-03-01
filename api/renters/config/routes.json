@@ -1,0 +1,60 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/renters",
+      "handler": "renters.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/renters/:usernameOrEmail",
+      "handler": "renters.usernameOrEmail",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/renters/count",
+      "handler": "renters.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/renters/:id",
+      "handler": "renters.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/renters",
+      "handler": "renters.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/renters/:id",
+      "handler": "renters.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/renters/:id",
+      "handler": "renters.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

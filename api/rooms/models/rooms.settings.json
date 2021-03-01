@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rooms",
+  "info": {
+    "name": "rooms"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "payment_format": {
+      "type": "json"
+    },
+    "address_info": {
+      "type": "json"
+    },
+    "building_info": {
+      "type": "json"
+    },
+    "num_of_rooms": {
+      "type": "integer"
+    }
+  }
+}

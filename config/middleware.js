@@ -1,0 +1,10 @@
+module.exports={
+    settings:{
+        cors:{
+            origin:"*"
+        }
+    },
+    load:{
+        "before":["cors"]
+    }
+}

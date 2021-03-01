@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "renters",
+  "info": {
+    "name": "renters",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "f_name": {
+      "type": "string"
+    },
+    "l_name": {
+      "type": "string"
+    },
+    "m_name": {
+      "type": "string"
+    },
+    "prof_pic": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "occupation": {
+      "type": "string"
+    },
+    "dob": {
+      "type": "date"
+    },
+    "email": {
+      "type": "email"
+    },
+    "choices": {
+      "type": "json"
+    },
+    "mobile_num": {
+      "type": "string"
+    },
+    "budget": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "integer"
+    },
+    "address": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/updateUserRole",
+      "handler": "User_perm.updateUserRole",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
