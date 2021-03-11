@@ -71,19 +71,44 @@ module.exports = {
             );
         }
     },
-    // controller for /api/renters/
+    // controller for /api/renters/login
     async usernameOrEmail(ctx) {
-        if (ctx.query) {
-            let { params } = ctx;
-            console.log(params)
-            const result = await strapi.query('renters').model.query(function (qb) {
-                qb.where({ username: params.usernameOrEmail })
-                    .orWhere({ email: params.usernameOrEmail });
-            }).fetchAll();
+        if (ctx.request) {
+            // console.log(Object.keys(ctx))
+            let { identifier, password } = ctx.request.body;
+            console.log(ctx.request.body)
+            //console.log(strapi.plugins['users-permissions'].controllers)
+            let authLoginPermissionController = strapi.plugins['users-permissions'].controllers.auth;
 
-            const fields = result && result.toJSON();
-            console.log(fields);
-            return fields;
+            await authLoginPermissionController.callback(ctx);
+            let auth = ctx.response._body;
+            console.log(Object.keys(ctx.response._body))
+            auth.extra = "ywywywy"
+            if (auth) {
+                const result = await strapi.query('renters').model.query(function (qb) {
+                    qb.where({ user_id: auth.user.id });
+                }).fetchAll();
+
+                const fields = result && result.toJSON();
+                console.log(fields);
+                if (fields.length > 0) {
+                    console.log("Not a renter...")
+                    ctx.response._body.user={
+                        ...ctx.response._body.user,renterInfo:{
+                            ...fields[0]
+                        }
+                    }
+                }else{
+                    console.log("Not a renter...")
+                    ctx.response.res.statusCode=404;
+                    ctx.response.res.statusMessage="No renter account found.";
+                    ctx.response._body={
+                        err:"No renter account found that matches."
+                    }
+                }
+            }
+
+
         } else {
             const result = await strapi.query('renters').model.fetchAll();
             const fields = result && result.toJSON();

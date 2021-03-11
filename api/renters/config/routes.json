@@ -9,8 +9,8 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/renters/:usernameOrEmail",
+      "method": "POST",
+      "path": "/renters/login/",
       "handler": "renters.usernameOrEmail",
       "config": {
         "policies": []
