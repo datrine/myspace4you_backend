@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "rooms",
   "info": {
-    "name": "rooms"
+    "name": "rooms",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -21,6 +22,17 @@
     },
     "num_of_rooms": {
       "type": "integer"
+    },
+    "room_pics": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
