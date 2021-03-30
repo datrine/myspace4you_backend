@@ -1,0 +1,10 @@
+{
+  "provider": "aws-s3",
+  "providerOptions": {
+    "accessKeyId": "AKIAICZ65NUI337XGHLQ",
+    "secretAccessKey": "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",
+    "params": {
+      "Bucket": "myspace4youbucket"
+    }
+  }
+}
