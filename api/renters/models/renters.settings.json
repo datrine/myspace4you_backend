@@ -57,6 +57,9 @@
     },
     "address": {
       "type": "text"
+    },
+    "phonenum": {
+      "type": "string"
     }
   }
 }
