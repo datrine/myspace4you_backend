@@ -2,8 +2,8 @@ module.exports = ({ env }) => ({
     upload: {
       provider: 'aws-s3',
       providerOptions: {
-        accessKeyId: env('AKIAICZ65NUI337XGHLQ'),
-        secretAccessKey: env('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'),
+        accessKeyId: env('AKIASWN6B2XU6FMJX4JE'),
+        secretAccessKey: env('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'),
         //region: 'global',
         params: {
           Bucket: 'myspace4youbucket',
