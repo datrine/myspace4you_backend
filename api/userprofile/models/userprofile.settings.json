@@ -1,14 +1,14 @@
 {
   "kind": "collectionType",
-  "collectionName": "renters",
+  "collectionName": "profile",
   "info": {
-    "name": "renters",
+    "name": "userprofile",
     "description": ""
   },
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "f_name": {
@@ -20,14 +20,34 @@
     "m_name": {
       "type": "string"
     },
+    "email": {
+      "type": "email"
+    },
     "prof_pic": {
       "model": "file",
       "via": "related",
       "allowedTypes": [
-        "images"
+        "images",
+        "files",
+        "videos"
       ],
       "plugin": "upload",
       "required": false
+    },
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female",
+        "nonbinary",
+        "agender"
+      ]
+    },
+    "phonenum": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "integer"
     },
     "occupation": {
       "type": "string"
@@ -35,29 +55,8 @@
     "dob": {
       "type": "date"
     },
-    "email": {
-      "type": "email"
-    },
-    "choices": {
-      "type": "json"
-    },
-    "mobile_num": {
-      "type": "string"
-    },
-    "budget": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "user_id": {
-      "type": "integer"
-    },
     "address": {
-      "type": "text"
-    },
-    "phonenum": {
-      "type": "string"
+      "type": "richtext"
     }
   }
 }

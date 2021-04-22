@@ -33,6 +33,17 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "prof_pic": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

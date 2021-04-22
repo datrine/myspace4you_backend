@@ -12,6 +12,7 @@
   "devDependencies": {},
   "dependencies": {
     "knex": "<0.20.0",
+    "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "mysql": "latest",
     "strapi": "3.4.4",
