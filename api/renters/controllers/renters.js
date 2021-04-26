@@ -32,8 +32,10 @@ module.exports = {
                 );
             }
             let userPermissionController = strapi.plugins['users-permissions'].controllers.user;
-            //console.log(userPermissionController)
-            await userPermissionController.create(ctx);
+            if (!ctx.state.user) {
+                //console.log(userPermissionController)
+                await userPermissionController.create(ctx);
+            }
             let res = ctx.response
             if (res.status >= 200 && res.status < 300) {
                 let user = res.body
@@ -44,14 +46,15 @@ module.exports = {
                          * @param {import("knex").QueryBuilder} knex
                          */
                         function (knex) {
-                            knex.insert({ user_id: user.id, ...body }).then(renters => {
-                                console.log(renters)
-                                if (renters.length > 0) {
+                            knex.insert({ userId: user.id, ...body }).
+                                onConflict(['userId', 'email']).ignore().then(renters => {
+                                    console.log(renters)
+                                    if (renters.length > 0) {
 
-                                }
-                            }).catch(err => {
-                                console.log(err)
-                            });
+                                    }
+                                }).catch(err => {
+                                    console.log(err)
+                                });
                         });
                 }
                 else {
@@ -93,17 +96,17 @@ module.exports = {
                 console.log(fields);
                 if (fields.length > 0) {
                     console.log("Not a renter...")
-                    ctx.response._body.user={
-                        ...ctx.response._body.user,renterInfo:{
+                    ctx.response._body.user = {
+                        ...ctx.response._body.user, renterInfo: {
                             ...fields[0]
                         }
                     }
-                }else{
+                } else {
                     console.log("Not a renter...")
-                    ctx.response.res.statusCode=404;
-                    ctx.response.res.statusMessage="No renter account found.";
-                    ctx.response._body={
-                        err:"No renter account found that matches."
+                    ctx.response.res.statusCode = 404;
+                    ctx.response.res.statusMessage = "No renter account found.";
+                    ctx.response._body = {
+                        err: "No renter account found that matches."
                     }
                 }
             }

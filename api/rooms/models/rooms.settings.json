@@ -14,13 +14,13 @@
     "payment_format": {
       "type": "json"
     },
-    "address_info": {
+    "addressInfo": {
       "type": "json"
     },
-    "building_info": {
+    "buildingInfo": {
       "type": "json"
     },
-    "num_of_rooms": {
+    "numOfRooms": {
       "type": "integer"
     },
     "room_pics": {
@@ -34,16 +34,20 @@
       "plugin": "upload",
       "required": false
     },
-    "prof_pic": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false
+    "spaceInfo": {
+      "type": "json"
+    },
+    "flatmateInfo": {
+      "type": "json"
+    },
+    "spaceRules": {
+      "type": "json"
+    },
+    "renterid": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
     }
   }
 }

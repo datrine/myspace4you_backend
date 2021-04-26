@@ -11,52 +11,20 @@
     "draftAndPublish": true
   },
   "attributes": {
-    "f_name": {
-      "type": "string"
-    },
-    "l_name": {
-      "type": "string"
-    },
-    "m_name": {
-      "type": "string"
-    },
-    "prof_pic": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
-      "required": false
-    },
-    "occupation": {
-      "type": "string"
-    },
-    "dob": {
-      "type": "date"
-    },
     "email": {
-      "type": "email"
-    },
-    "choices": {
-      "type": "json"
-    },
-    "mobile_num": {
-      "type": "string"
-    },
-    "budget": {
-      "type": "string"
+      "type": "email",
+      "required": true,
+      "unique": true
     },
     "username": {
       "type": "string"
     },
-    "user_id": {
-      "type": "integer"
+    "userId": {
+      "type": "integer",
+      "unique": true,
+      "required": true
     },
-    "address": {
-      "type": "text"
-    },
-    "phonenum": {
+    "profileId": {
       "type": "string"
     }
   }
