@@ -19,8 +19,9 @@ module.exports = {
     //controller for POST /rooms =>create room
     async create(ctx) {
         let { body: bodyReq } = ctx.request;
+        console.log(ctx.request.headers)
         if (bodyReq) {
-            //console.log(strapi.controllers)
+            /*
             if (!bodyReq.userId) {
                 return ctx.badRequest(
                     null,
@@ -30,42 +31,20 @@ module.exports = {
                         field: ['userId'],
                     })
                 );
-            }
-            let renter =await strapi.controllers.renters.create(ctx);
-            console.log(renter)
+            }*/
+            let renter = await strapi.controllers.renters.create(ctx);
             let res = ctx.response
             if (res.status >= 200 && res.status < 300) {
-                let userSaved = res.body
-                if (userSaved) {
-                    await strapi.query('userprofile').model.query(
-                        /**
-                         * @param {import("knex").QueryBuilder} knex
-                         */
-                        async function (knex) {
-                            //console.log("1ajfasgjasghvhasvhs")
-                            let { password, username, ...rest } = bodyReq
-                            let profiles = await knex.insert({ userId: userSaved.id, ...rest })
-                            //console.log("2ajfasgjasghvhasvhs")
-                            //console.log(profiles)
-                            if (profiles.length > 0) {
-                                //console.log("3ajfasgjasghvhasvhs")
-                                const result = await strapi.query('userprofile').model.
-                                    query(function (qb) {
-                                        console.log("4ajfasgjasghvhasvhs")
-                                        qb.where({ userId: userSaved.id });
-                                    }).fetchAll();
-
-                                const fields = result && result.toJSON();
-                                let { id, rest } = fields[0];
-                                userSaved = { ...userSaved, ...rest, profileId: id }
-                                ///console.log(userSaved)
-                                res.body = userSaved
-                                ctx.response._body.user = userSaved
-                            }
-
-                        });
-                    console.log("jtrsesrwawe")
+                if (!renter) {
+                    res.status = 501
+                    return;
                 }
+                console.log("renter id : "+renter.id)
+                let room = await strapi.query('rooms').
+                create({...bodyReq, renterId: renter.id,userId:renter.userId, })
+                res.body = room
+                res.status = 200
+                return room
             }
             else {
                 console.log("unable to save")

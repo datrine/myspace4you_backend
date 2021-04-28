@@ -32,32 +32,41 @@ module.exports = {
                 );
             }
             let userPermissionController = strapi.plugins['users-permissions'].controllers.user;
+            let authPermissionController = strapi.plugins['users-permissions'].controllers.auth;
             if (!ctx.state.user) {
                 //console.log(userPermissionController)
                 await userPermissionController.create(ctx);
+                await authPermissionController.callback(ctx)
             }
             let res = ctx.response
-            if (res.status >= 200 && res.status < 300) {
-                let user = res.body
+            if (ctx.state.user) {
+                let { user } = ctx.state
                 if (user) {
-                    console.log(user)
-                    strapi.query('renters').model.query(
-                        /**
-                         * @param {import("knex").QueryBuilder} knex
-                         */
-                        function (knex) {
-                            knex.insert({ userId: user.id, ...body }).
-                                onConflict(['userId', 'email']).ignore().then(renters => {
-                                    console.log(renters)
-                                    if (renters.length > 0) {
 
-                                    }
-                                }).catch(err => {
-                                    console.log(err)
-                                });
-                        });
+                    const fields = await strapi.query('userprofile').find({ userId: user.id })
+                    console.log("fields")
+                    if (fields.length > 0) {
+                        let userprofile = fields[0]
+                        let renterAlreadySaved = await strapi.query('renters').findOne({ userId: user.id })
+                        if (!renterAlreadySaved) {
+                            let renter = await strapi.query('renters').
+                                create({ userId: user.id, profileId: userprofile.id })
+                            res.status = 200
+                            return renter
+                        }
+                        else if (renterAlreadySaved) {
+                            res.status = 200
+                            return renterAlreadySaved
+                        }
+                    }
+                    else {
+                        console.log("User profile does not exist...")
+                    }
                 }
                 else {
+                    console.log("user does not exist...");
+                    res.status=401
+                    return
                 }
             }
             else {

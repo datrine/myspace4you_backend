@@ -14,15 +14,6 @@
     "payment_format": {
       "type": "json"
     },
-    "addressInfo": {
-      "type": "json"
-    },
-    "buildingInfo": {
-      "type": "json"
-    },
-    "numOfRooms": {
-      "type": "integer"
-    },
     "room_pics": {
       "collection": "file",
       "via": "related",
@@ -43,10 +34,19 @@
     "spaceRules": {
       "type": "json"
     },
-    "renterid": {
-      "type": "string"
+    "renterId": {
+      "type": "integer"
     },
     "userId": {
+      "type": "integer"
+    },
+    "locationInfo": {
+      "type": "json"
+    },
+    "nameOfRoom": {
+      "type": "string"
+    },
+    "desc": {
       "type": "string"
     }
   }
