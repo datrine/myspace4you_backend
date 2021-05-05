@@ -43,11 +43,20 @@
     "locationInfo": {
       "type": "json"
     },
-    "nameOfRoom": {
+    "nameOfSpace": {
       "type": "string"
     },
-    "desc": {
+    "descOfSpace": {
       "type": "string"
+    },
+    "spaceAvailabiltyInfo": {
+      "type": "json"
+    },
+    "spaceBills": {
+      "type": "json"
+    },
+    "spaceAmenities": {
+      "type": "json"
     }
   }
 }
