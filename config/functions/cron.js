@@ -11,11 +11,8 @@
  */
 
 module.exports = {
-  /**
-   * Simple example.
-   * Every monday at 1am.
-   */
-  // '0 1 * * 1': () => {
-  //
-  // }
+  //run every 5 seconds
+   '0/5 * * ? * *': (scheduled) => {
+  //console.log("Server is alive..."+scheduled)
+   }
 };

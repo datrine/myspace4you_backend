@@ -66,6 +66,7 @@ module.exports = {
                 else {
                     console.log("user does not exist...");
                     res.status=401
+
                     return
                 }
             }

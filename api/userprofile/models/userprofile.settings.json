@@ -21,7 +21,8 @@
       "type": "string"
     },
     "email": {
-      "type": "email"
+      "type": "email",
+      "unique": true
     },
     "prof_pic": {
       "model": "file",
@@ -47,7 +48,8 @@
       "type": "string"
     },
     "userId": {
-      "type": "integer"
+      "type": "integer",
+      "unique": true
     },
     "occupation": {
       "type": "string"

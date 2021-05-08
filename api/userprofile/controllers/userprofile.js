@@ -30,40 +30,19 @@ module.exports = {
                     })
                 );
             }
-            let userPermissionController = strapi.plugins['users-permissions'].controllers.user;
-            await userPermissionController.create(ctx);
+            let authPermissionController = strapi.plugins['users-permissions'].controllers.auth;
+            await authPermissionController.register(ctx);
             let res = ctx.response
             if (res.status >= 200 && res.status < 300) {
-                let userSaved = res.body
+                let { user: userSaved } = res.body
                 if (userSaved) {
-                    await strapi.query('userprofile').model.query(
-                        /**
-                         * @param {import("knex").QueryBuilder} knex
-                         */
-                        async function (knex) {
-                            //console.log("1ajfasgjasghvhasvhs")
-                            let { password, username, ...rest } = bodyReq
-                            let profiles = await knex.insert({ userId: userSaved.id, ...rest })
-                            //console.log("2ajfasgjasghvhasvhs")
-                            //console.log(profiles)
-                            if (profiles.length > 0) {
-                                //console.log("3ajfasgjasghvhasvhs")
-                                const result = await strapi.query('userprofile').model.
-                                    query(function (qb) {
-                                        console.log("4ajfasgjasghvhasvhs")
-                                        qb.where({ userId: userSaved.id });
-                                    }).fetchAll();
-
-                                const fields = result && result.toJSON();
-                                let { id, rest } = fields[0];
-                                userSaved = { ...userSaved, ...rest, profileId: id }
-                                ///console.log(userSaved)
-                                res.body = userSaved
-                                ctx.response._body.user = userSaved
-                            }
-
-                        });
-                    console.log("jtrsesrwawe")
+                    let { password, username, ...rest } = bodyReq
+                    let { id: idOfUser, restOfUser } = userSaved
+                    let userprofileId = await (await strapi.query('userprofile').
+                        create({ userId: idOfUser, ...rest })).id;
+                    let userprofile = await strapi.query("userprofile").findOne({ id: userprofileId })
+                    let { id: profileId, ...restOfProfile } = userprofile
+                    ctx.response._body.user = { ...restOfUser, ...restOfProfile, profileId }
                 }
             }
             else {
@@ -83,59 +62,58 @@ module.exports = {
     // controller for /api/userprofiles/login
     async login(ctx) {
         if (ctx.request) {
-            // console.log(Object.keys(ctx))
             let { identifier, password } = ctx.request.body;
-            //console.log(ctx.request.body)
-            //console.log(Object.keys(strapi.plugins))
-            //console.log(strapi.models)
             let authLoginPermissionController = strapi.plugins['users-permissions'].controllers.auth;
 
             await authLoginPermissionController.callback(ctx);
-            let { jwt, user } = ctx.response._body;
-            if (user) {
-                const result = await strapi.query('userprofile').model.query(function (qb) {
-                    qb.where({ userId: user.id });
-                }).fetchAll();
-
-                const fields = result && result.toJSON();
-                if (fields.length > 0) {
-                    let profileData = fields[0]
-                    let { id: profileId, ...restOfProfile } = profileData
-                    let { jwt, user } = ctx.response._body
+            let status = ctx.response.status
+            if (status >= 200 && status < 300) {
+                let { jwt, user } = ctx.response.body;
+                console.log(ctx.response.body)
+                if (user) {
+                    const result = await strapi.query('userprofile').model.query(function (qb) {
+                        qb.where({ userId: user.id });
+                    }).fetchAll();
                     console.log(jwt)
-                    user = { ...user, ...restOfProfile, profileId }
-                    console.log(user.username)
-                    ctx.response._body = {
-                        jwt, user
+                    const fields = result && result.toJSON();
+                    if (fields.length > 0) {
+                        let profileData = fields[0]
+                        let { id: profileId, ...restOfProfile } = profileData
+                        console.log(jwt)
+                        user = { ...user, ...restOfProfile, profileId }
+                        console.log(user.username)
+                        ctx.response._body = {
+                            jwt, user
+                        }
+                    } else {
+                        await strapi.query('userprofile').model.query(
+                            /**
+                             * @param {import("knex").QueryBuilder} knex
+                             */
+                            async function (knex) {
+                                let { id: userId, email, ...restOfUser } = user
+                                let profiles = await knex.insert({ userId, email })
+                                if (profiles.length > 0) {
+                                    //console.log("3ajfasgjasghvhasvhs")
+                                    const result = await strapi.query('userprofile').model.
+                                        query(function (qb) {
+                                            qb.where({ userId });
+                                        }).fetchAll();
+
+                                    const fields = result && result.toJSON();
+                                    let { id: profileId, ...rest } = fields[0];
+                                    let userSaved = { ...user, ...rest, profileId }
+                                    console.log(restOfUser)
+                                    res.body = userSaved
+                                    ctx.response._body.user = userSaved
+                                }
+
+                            });
                     }
-                } else {
-                    await strapi.query('userprofile').model.query(
-                        /**
-                         * @param {import("knex").QueryBuilder} knex
-                         */
-                        async function (knex) {
-                            let { id: userId, email, ...restOfUser } = user
-                            let profiles = await knex.insert({ userId, email })
-                            if (profiles.length > 0) {
-                                //console.log("3ajfasgjasghvhasvhs")
-                                const result = await strapi.query('userprofile').model.
-                                    query(function (qb) {
-                                        qb.where({ userId });
-                                    }).fetchAll();
-
-                                const fields = result && result.toJSON();
-                                let { id: profileId, ...rest } = fields[0];
-                                let userSaved = { ...user, ...rest, profileId }
-                                console.log(restOfUser)
-                                res.body = userSaved
-                                ctx.response._body.user = userSaved
-                            }
-
-                        });
                 }
             }
             else {
-                console.log("ytygygugyu")
+                console.log(ctx.response.status)
             }
         } else {
             const result = await strapi.query('userprofile').model.fetchAll();

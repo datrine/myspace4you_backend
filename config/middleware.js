@@ -3,6 +3,9 @@ module.exports = {
         cors: {
             origin: "*"
         },
+        sentry: {
+          enabled: true,
+        },
         parser: {
             enabled: true,
             multipart: true,
@@ -12,6 +15,6 @@ module.exports = {
         }
     },
     load: {
-        "before": ["cors"]
+        "before": [ 'sentry',"cors"]
     }
 }
