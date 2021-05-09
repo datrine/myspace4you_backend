@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/rooms",
-      "handler": "rooms.find",
+      "path": "/spaces",
+      "handler": "spaces.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/rooms/count",
-      "handler": "rooms.count",
+      "path": "/spaces/count",
+      "handler": "spaces.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/rooms/:id",
-      "handler": "rooms.findOne",
+      "path": "/spaces/:id",
+      "handler": "spaces.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/rooms",
-      "handler": "rooms.create",
+      "path": "/spaces",
+      "handler": "spaces.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/rooms/:id",
-      "handler": "rooms.update",
+      "path": "/spaces/:id",
+      "handler": "spaces.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/rooms/:id",
-      "handler": "rooms.delete",
+      "path": "/spaces/:id",
+      "handler": "spaces.delete",
       "config": {
         "policies": []
       }

@@ -16,7 +16,7 @@ const formatError = error => [
 
 module.exports = {
 
-    //controller for POST /rooms =>create room
+    //controller for POST /spaces =>create space
     async create(ctx) {
         let { body: bodyReq } = ctx.request;
         console.log(ctx.request.headers)
@@ -40,11 +40,11 @@ module.exports = {
                     return;
                 }
                 console.log("renter id : "+renter.id)
-                let room = await strapi.query('rooms').
+                let space = await strapi.query('spaces').
                 create({...bodyReq, renterId: renter.id,userId:renter.userId, })
-                res.body = room
+                res.body = space
                 res.status = 200
-                return room
+                return space
             }
             else {
                 console.log("unable to save")

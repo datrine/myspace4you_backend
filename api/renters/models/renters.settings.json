@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "renters",
   "info": {
-    "name": "renters",
+    "name": "renter",
     "description": ""
   },
   "options": {
