@@ -1,7 +1,7 @@
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
   port: env.int('PORT', 1337),
-  url: env('PUBLIC_URL', 'https://myspace4you.herokuapp.com/'),
+  url: env('PUBLIC_URL', 'https://www.myspace4you.com'),
   cron: {
     enabled: env.bool('CRON_ENABLED', true),
   },

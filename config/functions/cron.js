@@ -12,7 +12,7 @@
 
 module.exports = {
   //run every 5 seconds
-   '0/5 * * ? * *': (scheduled) => {
-  //console.log("Server is alive..."+scheduled)
+   '0/20 * * ? * *': (scheduled) => {
+  console.log("Server is alive..."+scheduled)
    }
 };

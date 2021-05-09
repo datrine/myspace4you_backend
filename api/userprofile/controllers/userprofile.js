@@ -33,6 +33,7 @@ module.exports = {
             let authPermissionController = strapi.plugins['users-permissions'].controllers.auth;
             await authPermissionController.register(ctx);
             let res = ctx.response
+            console.log(res)
             if (res.status >= 200 && res.status < 300) {
                 let { user: userSaved } = res.body
                 if (userSaved) {
