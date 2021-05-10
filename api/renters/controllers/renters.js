@@ -42,7 +42,6 @@ module.exports = {
             if (ctx.state.user) {
                 let { user } = ctx.state
                 if (user) {
-
                     const fields = await strapi.query('userprofile').find({ userId: user.id })
                     console.log("fields")
                     if (fields.length > 0) {
@@ -50,7 +49,7 @@ module.exports = {
                         let renterAlreadySaved = await strapi.query('renters').findOne({ userId: user.id })
                         if (!renterAlreadySaved) {
                             let renter = await strapi.query('renters').
-                                create({ userId: user.id, profileId: userprofile.id })
+                                create({ userId: user.id, profileId: userprofile.id,email:user.email })
                             res.status = 200
                             return renter
                         }

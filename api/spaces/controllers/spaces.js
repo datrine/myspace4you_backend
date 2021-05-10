@@ -19,19 +19,8 @@ module.exports = {
     //controller for POST /spaces =>create space
     async create(ctx) {
         let { body: bodyReq } = ctx.request;
-        console.log(ctx.request.headers)
+        console.log(bodyReq);
         if (bodyReq) {
-            /*
-            if (!bodyReq.userId) {
-                return ctx.badRequest(
-                    null,
-                    formatError({
-                        id: 'Auth.form.error.userId',
-                        message: 'UserId field cannot be empty.',
-                        field: ['userId'],
-                    })
-                );
-            }*/
             let renter = await strapi.controllers.renters.create(ctx);
             let res = ctx.response
             if (res.status >= 200 && res.status < 300) {
